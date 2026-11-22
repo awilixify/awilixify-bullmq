@@ -1,0 +1,79 @@
+{
+	"name": "@awilixify/bullmq",
+	"version": "0.1.0",
+	"description": "Type-safe, module-scoped BullMQ jobs for Awilixify.",
+	"type": "module",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/awilixify/awilixify-bullmq.git"
+	},
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./typebox": {
+			"types": "./dist/lib/typebox.d.ts",
+			"import": "./dist/lib/typebox.js"
+		}
+	},
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"sideEffects": false,
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=22"
+	},
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
+		"build:watch": "tsc -p tsconfig.build.json --watch",
+		"build:release": "del-cli dist && npm run lint && npm run check-types && npm test && npm run build",
+		"check-types": "tsc --noEmit",
+		"lint": "biome check index.ts lib test",
+		"lint:fix": "biome check --write index.ts lib test",
+		"test": "npm run test:runtime && npm run test:types",
+		"test:runtime": "vitest run",
+		"test:types": "tstyche",
+		"test:watch": "vitest",
+		"prepack": "npm run build:release"
+	},
+	"peerDependencies": {
+		"@sinclair/typebox": "^0.34.15",
+		"awilixify": "^3.5.1",
+		"bullmq": "^6.7.8"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.6.4",
+		"@sinclair/typebox": "^0.34.15",
+		"@swc/core": "^1.15.33",
+		"@types/node": "^22.15.21",
+		"awilix": "^13.0.0",
+		"awilixify": "^3.5.1",
+		"bullmq": "^6.7.8",
+		"del-cli": "^8.0.1",
+		"tstyche": "^7.2.5",
+		"typescript": "^5.9.3",
+		"unplugin-swc": "^1.5.9",
+		"vitest": "^5.0.5"
+	},
+	"keywords": [
+		"awilixify",
+		"bullmq",
+		"queues",
+		"dependency-injection",
+		"typescript"
+	],
+	"peerDependenciesMeta": {
+		"@sinclair/typebox": {
+			"optional": true
+		}
+	}
+}
